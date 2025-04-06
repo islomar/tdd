@@ -13,17 +13,17 @@ start: ## Start the project
 stop: ## Stop the project
 	docker compose down
 
-shell: start ## Start a shell in the container
-	docker compose exec bun sh
+shell:  ## Start a shell in the testing container
+	docker compose run bun sh
 
 test-all: start ## Run all the tests
-	docker compose exec bun bun test
+	docker compose run bun bun test
 
-test-watch-intro: start ## Run the tests in watch mode under introduction_to_tdd
-	docker compose exec bun bun --watch test introduction_to_tdd
+test-watch-intro: ## Run the tests in watch mode under introduction_to_tdd
+	docker compose run bun bun --watch test introduction_to_tdd
 
-test-watch-layers: start ## Run the tests in watch mode under layers_of_tests
-	docker compose exec bun bun --watch test layers_of_tests
+test-watch-layers: ## Run the tests in watch mode under layers_of_tests
+	docker compose run bun bun --watch test layers_of_tests
 
-test-watch-maintainable-tests: start ## Run the tests in watch mode under writing_maintainable_tests
-	docker compose exec bun bun --watch test writing_maintainable_tests
+test-watch-maintainable-tests: ## Run the tests in watch mode under writing_maintainable_tests
+	docker compose run bun bun --watch test writing_maintainable_tests
