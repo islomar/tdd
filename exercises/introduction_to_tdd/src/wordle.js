@@ -20,3 +20,29 @@ export function nameOfTheFunction(arg1, arg2, arg3) {
   return 42; // value to return from the function
 }
 */
+export const evaluateGuess = (guess, answer) => {
+  if (guess === "" && answer === "") {
+    return "";
+  }
+  let result = "";
+
+  for (let i = 0; i < guess.length; i++) {
+    if (isRightLetterInTheRightPosition(answer[i], guess[i])) {
+      result += "g";
+    } else if (isRightLetterInWrongPosition(answer, guess[i])) {
+      result += "o";
+    } else {
+      result += "-"; //letter not in the answer
+    }
+  }
+
+  return result;
+}
+
+function isRightLetterInTheRightPosition(guessLetter, answerLetter) {
+  return guessLetter === answerLetter;
+}
+
+function isRightLetterInWrongPosition(guess, answerLetter) {
+  return guess.includes(answerLetter);
+}

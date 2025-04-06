@@ -1,4 +1,5 @@
-import { expect, test } from "bun:test";
+import { expect, test, describe } from "bun:test";
+import { evaluateGuess } from "./wordle";
 
 /**
 example JavaScript test:
@@ -9,9 +10,29 @@ test("description of the test", () => {
   expect(result).toBe(42);
 });
 */
+describe("evaluateGuess", () => {
+  test("returns an empty string when both guess and answer are empty", () => {
+    const result = evaluateGuess("", "");
 
-test.todo('`evaluateGuess` result includes `"-"`s for letters not in the answer');
+    expect(result).toBe("");
+  });
 
-test.todo('`evaluateGuess` result includes `"g"`s for letters in the right place');
+  test("returns '-' for letters not in the answer", () => {
+    const result = evaluateGuess("abcde", "fghij");
 
-test.todo('`evaluateGuess` result includes `"o"`s for letters in the wrong place');
+    expect(result).toBe("-----");
+  });
+
+  test("returns 'g's for letters in the right place", () => {
+    const result = evaluateGuess("abcde", "abcfg");
+
+    expect(result).toBe("ggg--");
+  });
+
+  test("returns 'o's for letters in the wrong place", () => {
+    const result = evaluateGuess("abcde", "cfgab");
+
+    expect(result).toBe("ooo--");
+  });
+});
+
