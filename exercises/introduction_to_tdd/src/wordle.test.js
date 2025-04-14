@@ -34,5 +34,20 @@ describe("evaluateGuess", () => {
 
     expect(result).toBe("ooo--");
   });
+
+  test("returns 'g's and 'o's for mixed cases", () => {
+    const result = evaluateGuess("abcde", "abfcd");
+
+    expect(result).toBe("ggoo-");
+  });
+
+  test.each([
+    { guess: "xbxxb", answer: "abcde", expected: "-g--o" },
+    { guess: "xaxxa", answer: "abcde", expected: "-o--o" },
+  ])("a letter appearing more than once: returns $expected for guess '$guess' and answer '$answer'", ({ guess, answer, expected }) => {
+    const result = evaluateGuess(guess, answer);
+
+    expect(result).toBe(expected);
+  });
 });
 
