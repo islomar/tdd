@@ -1,5 +1,5 @@
 import { expect, test, describe } from "bun:test";
-import { evaluateGuess } from "./wordle";
+import { evaluateGuess, evaluateGuessV2 } from "./wordle";
 
 /**
 example JavaScript test:
@@ -44,8 +44,17 @@ describe("evaluateGuess", () => {
   test.each([
     { guess: "xbxxb", answer: "abcde", expected: "-g--o" },
     { guess: "xaxxa", answer: "abcde", expected: "-o--o" },
-  ])("a letter appearing more than once: returns $expected for guess '$guess' and answer '$answer'", ({ guess, answer, expected }) => {
+  ])("a guess letter matching several ones is shown in all of the positions: returns $expected for guess '$guess' and answer '$answer'", ({ guess, answer, expected }) => {
     const result = evaluateGuess(guess, answer);
+
+    expect(result).toBe(expected);
+  });
+
+  test.each([
+    { guess: "xbxxb", answer: "abcde", expected: "-g---" },
+    { guess: "xaxxa", answer: "abcde", expected: "-o---" },
+  ])("a guess letter matching several ones is only shown in the first matching position: returns $expected for guess '$guess' and answer '$answer'", ({ guess, answer, expected }) => {
+    const result = evaluateGuessV2(guess, answer);
 
     expect(result).toBe(expected);
   });

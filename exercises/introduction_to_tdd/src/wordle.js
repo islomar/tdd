@@ -39,10 +39,39 @@ export const evaluateGuess = (guess, answer) => {
   return result;
 }
 
+export const evaluateGuessV2 = (guess, answer) => {
+  if (guess === "" && answer === "") {
+    return "";
+  }
+  let result = "";
+  let lettersAlreadyDetected = new Set();
+
+  for (let i = 0; i < guess.length; i++) {
+    if (isLetterAlreadyDetected(guess[i], lettersAlreadyDetected)) {
+      result += "-";
+      continue;
+    }
+    if (isRightLetterInTheRightPosition(answer[i], guess[i])) {
+      result += "g";
+    } else if (isRightLetterInWrongPosition(answer, guess[i])) {
+      result += "o";
+    } else {
+      result += "-"; //letter not in the answer
+    }
+    lettersAlreadyDetected.add(guess[i]);
+  }
+
+  return result;
+}
+
 function isRightLetterInTheRightPosition(guessLetter, answerLetter) {
   return guessLetter === answerLetter;
 }
 
 function isRightLetterInWrongPosition(guess, answerLetter) {
   return guess.includes(answerLetter);
+}
+
+function isLetterAlreadyDetected(guessLetter, lettersAlreadyDetected) {
+  return lettersAlreadyDetected.has(guessLetter);
 }
